@@ -1,75 +1,79 @@
-[gd_scene load_steps=7 format=3 uid="uid://canteen"]
-[ext_resource type="Texture2D" path="res://assets/tiles/floor_light.png" id="floor"]
-[ext_resource type="Texture2D" path="res://assets/tiles/wall_light.png" id="wall"]
-[ext_resource type="Texture2D" path="res://assets/tiles/table.png" id="table"]
-[ext_resource type="Texture2D" path="res://assets/tiles/desk.png" id="desk"]
-[ext_resource type="Texture2D" path="res://assets/sprites/cook.png" id="cook"]
-[ext_resource type="Texture2D" path="res://assets/tiles/door.png" id="door_tex"]
+[gd_scene load_steps=0 format=3 uid="uid://canteen"]
+
+[ext_resource type="Texture2D" path="res://assets/rm/tilesets/SF_Inside_A4.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/rm/tilesets/SF_Inside_B.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/rm/characters/People1.png" id="7"]
+[ext_resource type="Script" path="res://scripts/rest_station.gd" id="8"]
+[ext_resource type="Script" path="res://scripts/door.gd" id="9"]
+[ext_resource type="Script" path="res://scripts/npc.gd" id="10"]
 
 [sub_resource type="RectangleShape2D" id="DoorShape"]
-size = Vector2(32, 48)
+size = Vector2(48, 48)
 [sub_resource type="RectangleShape2D" id="W_T"]
-size = Vector2(1000, 24)
+size = Vector2(900, 48)
 [sub_resource type="RectangleShape2D" id="W_B"]
-size = Vector2(1000, 24)
+size = Vector2(900, 48)
 [sub_resource type="RectangleShape2D" id="W_L"]
-size = Vector2(24, 600)
+size = Vector2(48, 600)
 [sub_resource type="RectangleShape2D" id="W_R"]
-size = Vector2(24, 600)
+size = Vector2(48, 600)
 [sub_resource type="RectangleShape2D" id="StnShape"]
-size = Vector2(40, 40)
+size = Vector2(48, 48)
 [sub_resource type="RectangleShape2D" id="NpcShape"]
-size = Vector2(40, 40)
+size = Vector2(48, 48)
 
 [node name="Room" type="Node2D"]
+
+; === 地板 ===
 [node name="Floor" type="Sprite2D" parent="."]
-texture = ExtResource("floor")
-position = Vector2(480, 288)
-scale = Vector2(20, 20)
+texture = ExtResource("5")
+region_enabled = true
+region_rect = Rect2(384, 0, 960, 672)
+position = Vector2(480, 336)
+centered = true
 z_index = -1
+
+; === 墙壁碰撞体 ===
 [node name="Wall_Top" type="StaticBody2D" parent="."]
 position = Vector2(480, -12)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Top"]
 shape = SubResource("W_T")
 [node name="Wall_Bottom" type="StaticBody2D" parent="."]
-position = Vector2(480, 588)
+position = Vector2(480, 636)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Bottom"]
 shape = SubResource("W_B")
 [node name="Wall_Left" type="StaticBody2D" parent="."]
-position = Vector2(-12, 288)
+position = Vector2(-12, 312)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Left"]
 shape = SubResource("W_L")
 [node name="Wall_Right" type="StaticBody2D" parent="."]
-position = Vector2(972, 288)
+position = Vector2(972, 312)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Right"]
 shape = SubResource("W_R")
-[node name="WallTop" type="Sprite2D" parent="."]
-texture = ExtResource("wall")
-position = Vector2(320, 24)
-scale = Vector2(19.5, 19.5)
+
+; === 取餐台 ===
+[node name="Counter" type="Sprite2D" parent="."]
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(96, 432, 96, 48)
+position = Vector2(480, 168)
 z_index = 0
-[node name="WallTop2" type="Sprite2D" parent="."]
-texture = ExtResource("wall")
-position = Vector2(640, 24)
-scale = Vector2(19.5, 19.5)
-z_index = 0
-[node name="Counter0" type="Sprite2D" parent="."]
-texture = ExtResource("desk")
-position = Vector2(300, 100)
-scale = Vector2(3, 3)
-z_index = 0
+
+; === 吃饭互动区1 ===
 [node name="EatStation0" type="Area2D" parent="."]
-position = Vector2(300, 130)
-script = "res://scripts/rest_station.gd"
+position = Vector2(240, 300)
+script = ExtResource("8")
 rest_type = "eat"
 energy_restore = 25
-happiness_restore = -8
+happiness_restore = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EatStation0"]
 shape = SubResource("StnShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="EatStation0"]
-texture = ExtResource("desk")
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(96, 432, 48, 48)
 z_index = 0
 
 [node name="Label" type="Label" parent="EatStation0"]
@@ -84,23 +88,30 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 [node name="Cooldown" type="Timer" parent="EatStation0"]
 wait_time = 0.5
 one_shot = true
-[node name="Counter1" type="Sprite2D" parent="."]
-texture = ExtResource("desk")
-position = Vector2(660, 100)
-scale = Vector2(3, 3)
+
+; === 桌子 ===
+[node name="Table0" type="Sprite2D" parent="."]
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(96, 432, 96, 48)
+position = Vector2(240, 240)
 z_index = 0
+
+; === 吃饭互动区2 ===
 [node name="EatStation1" type="Area2D" parent="."]
-position = Vector2(660, 130)
-script = "res://scripts/rest_station.gd"
+position = Vector2(720, 300)
+script = ExtResource("8")
 rest_type = "eat"
 energy_restore = 25
-happiness_restore = -8
+happiness_restore = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EatStation1"]
 shape = SubResource("StnShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="EatStation1"]
-texture = ExtResource("desk")
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(96, 432, 48, 48)
 z_index = 0
 
 [node name="Label" type="Label" parent="EatStation1"]
@@ -115,39 +126,37 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 [node name="Cooldown" type="Timer" parent="EatStation1"]
 wait_time = 0.5
 one_shot = true
-[node name="Table0" type="Sprite2D" parent="."]
-texture = ExtResource("table")
-position = Vector2(240, 300)
-scale = Vector2(1.5, 1.5)
-z_index = 0
+
+; === 桌子 ===
 [node name="Table1" type="Sprite2D" parent="."]
-texture = ExtResource("table")
-position = Vector2(480, 300)
-scale = Vector2(1.5, 1.5)
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(96, 432, 96, 48)
+position = Vector2(720, 240)
 z_index = 0
-[node name="Table2" type="Sprite2D" parent="."]
-texture = ExtResource("table")
-position = Vector2(720, 300)
-scale = Vector2(1.5, 1.5)
-z_index = 0
-[node name="Table3" type="Sprite2D" parent="."]
-texture = ExtResource("table")
-position = Vector2(240, 440)
-scale = Vector2(1.5, 1.5)
-z_index = 0
-[node name="Table4" type="Sprite2D" parent="."]
-texture = ExtResource("table")
-position = Vector2(480, 440)
-scale = Vector2(1.5, 1.5)
-z_index = 0
-[node name="Table5" type="Sprite2D" parent="."]
-texture = ExtResource("table")
-position = Vector2(720, 440)
-scale = Vector2(1.5, 1.5)
-z_index = 0
+
+; === 厨师 NPC ===
+[node name="Cook" type="Area2D" parent="."]
+position = Vector2(480, 120)
+script = ExtResource("10")
+npc_name = "厨师"
+dialog_lines = ["今天有红烧肉！", "多吃点，补充体力！", "学业重要，身体更重要！"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cook"]
+shape = SubResource("NpcShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Cook"]
+texture = ExtResource("7")
+region_enabled = true
+region_rect = Rect2(432, 0, 144, 192)
+hframes = 3
+vframes = 4
+frame = 3
+
+; === 门到教室 ===
 [node name="DoorToClassroom" type="Area2D" parent="."]
-position = Vector2(940, 288)
-script = "res://scripts/door.gd"
+position = Vector2(480, 0)
+script = ExtResource("9")
 target_scene = "res://scenes/classroom.tscn"
 target_spawn = "spawn_door"
 
@@ -155,24 +164,13 @@ target_spawn = "spawn_door"
 shape = SubResource("DoorShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="DoorToClassroom"]
-texture = ExtResource("door_tex")
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(0, 384, 48, 48)
 z_index = 1
-[node name="spawn_door" type="Marker2D" parent="."]
-position = Vector2(940, 288)
+
+; === 出生点 ===
 [node name="spawn_default" type="Marker2D" parent="."]
-position = Vector2(480, 400)
-[node name="Cook" type="Area2D" parent="."]
-position = Vector2(480, 180)
-script = "res://scripts/npc.gd"
-npc_name = "食堂阿姨"
-spritesheet = "cook"
-dialog_lines = ["今天的红烧肉不错！", "多吃点，吃饱了才有力气学习！", "给你多打了一勺！"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cook"]
-shape = SubResource("NpcShape")
-
-[node name="Sprite2D" type="Sprite2D" parent="Cook"]
-texture = ExtResource("cook")
-hframes = 3
-vframes = 4
-frame = 0
+position = Vector2(480, 480)
+[node name="spawn_door" type="Marker2D" parent="."]
+position = Vector2(480, 96)

@@ -30,8 +30,8 @@ func interact(_player: Node) -> void:
 		GameState.change_happiness(happiness_restore)
 		
 		if main:
-		 main.show_dialog("你睡了一觉，精力恢复了。\n（按空格键继续）", "休息")
-		 await main.dialog_ui.get_node("DialogPanel").dialog_closed
+			main.show_dialog("你睡了一觉，精力恢复了。\n（按空格键继续）", "休息")
+			await main.dialog_ui.get_node("DialogPanel").dialog_closed
 		
 		GameState.end_day()
 		

@@ -1,93 +1,127 @@
-[gd_scene load_steps=8 format=3 uid="uid://dormitory"]
-[ext_resource type="Texture2D" path="res://assets/tiles/floor_light.png" id="floor"]
-[ext_resource type="Texture2D" path="res://assets/tiles/wall_dark.png" id="wall"]
-[ext_resource type="Texture2D" path="res://assets/tiles/bed.png" id="bed"]
-[ext_resource type="Texture2D" path="res://assets/tiles/desk.png" id="desk"]
-[ext_resource type="Texture2D" path="res://assets/tiles/cabinet.png" id="cab"]
-[ext_resource type="Texture2D" path="res://assets/sprites/classmate.png" id="npc"]
-[ext_resource type="Texture2D" path="res://assets/tiles/door.png" id="door_tex"]
+[gd_scene load_steps=0 format=3 uid="uid://dormitory"]
+
+[ext_resource type="Script" path="res://scripts/rest_station.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/study_station.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/door.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/npc.gd" id="4"]
+[ext_resource type="Texture2D" path="res://assets/rm/tilesets/SF_Inside_A4.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/rm/tilesets/SF_Inside_B.png" id="6"]
+[ext_resource type="Texture2D" path="res://assets/rm/characters/People1.png" id="7"]
 
 [sub_resource type="RectangleShape2D" id="DoorShape"]
-size = Vector2(32, 48)
+size = Vector2(48, 48)
 [sub_resource type="RectangleShape2D" id="W_T"]
-size = Vector2(1000, 24)
+size = Vector2(900, 48)
 [sub_resource type="RectangleShape2D" id="W_B"]
-size = Vector2(1000, 24)
+size = Vector2(900, 48)
 [sub_resource type="RectangleShape2D" id="W_L"]
-size = Vector2(24, 600)
+size = Vector2(48, 700)
 [sub_resource type="RectangleShape2D" id="W_R"]
-size = Vector2(24, 600)
+size = Vector2(48, 700)
 [sub_resource type="RectangleShape2D" id="StnShape"]
-size = Vector2(40, 40)
+size = Vector2(48, 48)
 [sub_resource type="RectangleShape2D" id="NpcShape"]
-size = Vector2(40, 40)
+size = Vector2(48, 48)
+[sub_resource type="RectangleShape2D" id="BedColl"]
+size = Vector2(96, 48)
 
 [node name="Room" type="Node2D"]
+
+; === 地板 ===
 [node name="Floor" type="Sprite2D" parent="."]
-texture = ExtResource("floor")
-position = Vector2(480, 288)
-scale = Vector2(20, 20)
+texture = ExtResource("5")
+region_enabled = true
+region_rect = Rect2(384, 0, 960, 672)  ; 20x14 tiles = 960x672
+position = Vector2(480, 336)
+centered = true
 z_index = -1
-[node name="Wall_Top" type="StaticBody2D" parent="."]
+
+; === 墙壁 ===
+[node name="WallTop" type="StaticBody2D" parent="."]
 position = Vector2(480, -12)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Top"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallTop"]
 shape = SubResource("W_T")
-[node name="Wall_Bottom" type="StaticBody2D" parent="."]
-position = Vector2(480, 588)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Bottom"]
+[node name="WallBottom" type="StaticBody2D" parent="."]
+position = Vector2(480, 636)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallBottom"]
 shape = SubResource("W_B")
-[node name="Wall_Left" type="StaticBody2D" parent="."]
-position = Vector2(-12, 288)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Left"]
+[node name="WallLeft" type="StaticBody2D" parent="."]
+position = Vector2(-12, 312)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
 shape = SubResource("W_L")
-[node name="Wall_Right" type="StaticBody2D" parent="."]
-position = Vector2(972, 288)
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Right"]
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2(972, 312)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
 shape = SubResource("W_R")
-[node name="WallTop" type="Sprite2D" parent="."]
-texture = ExtResource("wall")
-position = Vector2(320, 24)
-scale = Vector2(19.5, 19.5)
-z_index = 0
-[node name="WallTop2" type="Sprite2D" parent="."]
-texture = ExtResource("wall")
-position = Vector2(640, 24)
-scale = Vector2(19.5, 19.5)
-z_index = 0
-[node name="WallBot" type="Sprite2D" parent="."]
-texture = ExtResource("wall")
-position = Vector2(320, 552)
-scale = Vector2(19.5, 19.5)
-z_index = 0
-[node name="WallBot2" type="Sprite2D" parent="."]
-texture = ExtResource("wall")
-position = Vector2(640, 552)
-scale = Vector2(19.5, 19.5)
-z_index = 0
+
+; === 墙壁精灵（使用 SF_Inside_A4 的墙砖） ===
+[node name="WallSpriteTop" type="Sprite2D" parent="."]
+texture = ExtResource("5")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+position = Vector2(0, 24)
+scale = Vector2(20, 1)
+z_index = 2
+
+[node name="WallSpriteBottom" type="Sprite2D" parent="."]
+texture = ExtResource("5")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+position = Vector2(0, 624)
+scale = Vector2(20, 1)
+z_index = 2
+
+[node name="WallSpriteLeft" type="Sprite2D" parent="."]
+texture = ExtResource("5")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+position = Vector2(24, 0)
+scale = Vector2(1, 14)
+z_index = 2
+
+[node name="WallSpriteRight" type="Sprite2D" parent="."]
+texture = ExtResource("5")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+position = Vector2(936, 0)
+scale = Vector2(1, 14)
+z_index = 2
+
+; === 床 (SF_Inside_B 的床瓦片) ===
 [node name="Bed" type="Sprite2D" parent="."]
-texture = ExtResource("bed")
-position = Vector2(120, 380)
-scale = Vector2(2, 2)
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(144, 240, 96, 48)
+position = Vector2(144, 384)
 z_index = 0
+
+[node name="BedCollision" type="StaticBody2D" parent="Bed"]
+position = Vector2(0, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed/BedCollision"]
+shape = SubResource("BedColl")
+
+; === 床互动区域 ===
 [node name="BedStation" type="Area2D" parent="."]
-position = Vector2(120, 400)
-script = "res://scripts/rest_station.gd"
+position = Vector2(144, 400)
+script = ExtResource("1")
 rest_type = "sleep"
-energy_restore = 40
+energy_restore = 50
 happiness_restore = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BedStation"]
 shape = SubResource("StnShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="BedStation"]
-texture = ExtResource("bed")
-z_index = 0
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+modulate = Color(1, 1, 1, 0)
 
 [node name="Label" type="Label" parent="BedStation"]
-offset_left = -30.0
-offset_top = -40.0
-offset_right = 30.0
-offset_bottom = -20.0
+offset_left = -40.0
+offset_top = -50.0
+offset_right = 40.0
+offset_bottom = -30.0
 text = ""
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -95,30 +129,37 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 [node name="Cooldown" type="Timer" parent="BedStation"]
 wait_time = 0.5
 one_shot = true
+
+; === 书桌 (SF_Inside_B 的书桌) ===
 [node name="Desk" type="Sprite2D" parent="."]
-texture = ExtResource("desk")
-position = Vector2(750, 380)
-scale = Vector2(1.5, 1.5)
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(144, 192, 96, 48)
+position = Vector2(750, 384)
 z_index = 0
+
+; === 学习互动区域 ===
 [node name="StudyDesk" type="Area2D" parent="."]
 position = Vector2(750, 400)
-script = "res://scripts/study_station.gd"
-efficiency = 0.8
-energy_cost = 8
-study_gain = 12
+script = ExtResource("2")
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StudyDesk"]
 shape = SubResource("StnShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="StudyDesk"]
-texture = ExtResource("desk")
-z_index = 0
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 48)
+modulate = Color(1, 1, 1, 0)
 
 [node name="Label" type="Label" parent="StudyDesk"]
-offset_left = -30.0
-offset_top = -40.0
-offset_right = 30.0
-offset_bottom = -20.0
+offset_left = -40.0
+offset_top = -50.0
+offset_right = 40.0
+offset_bottom = -30.0
 text = ""
 theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -126,14 +167,19 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 [node name="Cooldown" type="Timer" parent="StudyDesk"]
 wait_time = 0.5
 one_shot = true
+
+; === 柜子 (SF_Inside_B) ===
 [node name="Cabinet" type="Sprite2D" parent="."]
-texture = ExtResource("cab")
-position = Vector2(850, 160)
-scale = Vector2(1.0, 1.0)
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(0, 288, 48, 48)
+position = Vector2(864, 144)
 z_index = 0
+
+; === 门到教室 ===
 [node name="DoorToClassroom" type="Area2D" parent="."]
-position = Vector2(940, 288)
-script = "res://scripts/door.gd"
+position = Vector2(960, 300)
+script = ExtResource("3")
 target_scene = "res://scenes/classroom.tscn"
 target_spawn = "spawn_door"
 
@@ -141,24 +187,33 @@ target_spawn = "spawn_door"
 shape = SubResource("DoorShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="DoorToClassroom"]
-texture = ExtResource("door_tex")
+texture = ExtResource("6")
+region_enabled = true
+region_rect = Rect2(0, 384, 48, 48)
 z_index = 1
+
+; === 出生点 ===
 [node name="spawn_bed" type="Marker2D" parent="."]
-position = Vector2(120, 320)
+position = Vector2(144, 336)
 [node name="spawn_default" type="Marker2D" parent="."]
 position = Vector2(480, 400)
+[node name="spawn_door" type="Marker2D" parent="."]
+position = Vector2(912, 400)
+
+; === 室友 (People1 人物) ===
 [node name="Roommate" type="Area2D" parent="."]
-position = Vector2(480, 440)
-script = "res://scripts/npc.gd"
+position = Vector2(480, 432)
+script = ExtResource("4")
 npc_name = "室友"
-spritesheet = "npc"
 dialog_lines = ["又在卷？早点休息吧！", "明天考试你准备好了吗？", "加油！我们一起上岸！"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Roommate"]
 shape = SubResource("NpcShape")
 
 [node name="Sprite2D" type="Sprite2D" parent="Roommate"]
-texture = ExtResource("npc")
+texture = ExtResource("7")
+region_enabled = true
+region_rect = Rect2(288, 0, 144, 192)  ; People1第5个角色
 hframes = 3
 vframes = 4
-frame = 0
+frame = 1

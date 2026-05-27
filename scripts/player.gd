@@ -1,31 +1,40 @@
 extends CharacterBody2D
 
-# ===== 移动参数 =====
-const SPEED: float = 180.0
+# ===== RPG Maker MV 风格网格移动 =====
 const TILE_SIZE: int = 48
+const MOVE_SPEED: float = 240.0   # 像素/秒
+const MOVE_DELAY: float = 0.08    # 动画帧间隔
 
 # ===== 方向枚举 =====
 enum Dir { DOWN, LEFT, RIGHT, UP }
 
+# ===== 网格移动状态 =====
 var facing_dir: int = Dir.DOWN
 var is_moving: bool = false
+var target_pos: Vector2 = Vector2.ZERO
+var move_dir: Vector2 = Vector2.ZERO
+
+# ===== 动画状态 =====
 var anim_timer: float = 0.0
 var anim_frame: int = 0
+var was_moving: bool = false
 
 # ===== 交互系统 =====
 var nearby_interactable: Node = null
-var is_busy: bool = false          # 对话/考试中禁用移动
+var is_busy: bool = false
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var interaction_area: Area2D = $InteractionArea
 
 func _ready() -> void:
-	# 水平翻转默认
+	sprite.texture = preload("res://assets/rm/characters/Actor1.png")
+	sprite.region_enabled = true
+	sprite.region_rect = Rect2(0, 0, 144, 192)  # 第一个角色(霍尔德)
 	sprite.hframes = 3
 	sprite.vframes = 4
+	target_pos = position
 	update_sprite()
-
-	# 连接交互信号
+	
 	interaction_area.body_entered.connect(_on_interaction_area_body_entered)
 	interaction_area.body_exited.connect(_on_interaction_area_body_exited)
 	interaction_area.area_entered.connect(_on_interaction_area_area_entered)
@@ -37,34 +46,50 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 	
-	# 输入方向
-	var input_dir = Vector2(
-		Input.get_axis("ui_left", "ui_right"),
-		Input.get_axis("ui_up", "ui_down")
-	)
-	
-	# 更新朝向
-	if input_dir.length() > 0.1:
-		input_dir = input_dir.normalized()
-		is_moving = true
-		# 确定主方向
-		if absf(input_dir.x) > absf(input_dir.y):
-			facing_dir = Dir.RIGHT if input_dir.x > 0 else Dir.LEFT
-		else:
-			facing_dir = Dir.DOWN if input_dir.y > 0 else Dir.UP
+	# === 网格移动逻辑 (RPG Maker 风格) ===
+	if not is_moving:
+		var input_dir = Vector2(
+			Input.get_axis("ui_left", "ui_right"),
+			Input.get_axis("ui_up", "ui_down")
+		)
 		
-		# 动画计时
-		anim_timer += delta
-		if anim_timer > 0.15:
+		if input_dir.length() > 0.1:
+			input_dir = input_dir.normalized()
+			
+			# 确定主方向
+			if absf(input_dir.x) > absf(input_dir.y):
+				move_dir = Vector2(signf(input_dir.x), 0)
+				facing_dir = Dir.RIGHT if input_dir.x > 0 else Dir.LEFT
+			else:
+				move_dir = Vector2(0, signf(input_dir.y))
+				facing_dir = Dir.DOWN if input_dir.y > 0 else Dir.UP
+			
+			# 计算目标网格位置（对齐到网格）
+			target_pos = (position / TILE_SIZE).round() * TILE_SIZE + move_dir * TILE_SIZE
+			is_moving = true
+			anim_frame = 1  # 走路动画
 			anim_timer = 0.0
-			anim_frame = (anim_frame + 1) % 3
-	else:
-		is_moving = false
-		anim_frame = 0
-		anim_timer = 0.0
 	
-	velocity = input_dir * SPEED
-	move_and_slide()
+	if is_moving:
+		# 向目标位置移动
+		var dist = target_pos - position
+		if dist.length() > 1.0:
+			velocity = dist.normalized() * MOVE_SPEED
+			move_and_slide()
+			
+			# 动画循环
+			anim_timer += delta
+			if anim_timer >= MOVE_DELAY:
+				anim_timer = 0.0
+				anim_frame = (anim_frame + 1) % 3
+				if anim_frame == 0:
+					anim_frame = 1  # 0是站立帧，走路只用1和2交替
+		else:
+			position = target_pos
+			is_moving = false
+			anim_frame = 0  # 站立
+			anim_timer = 0.0
+	
 	update_sprite()
 	
 	# 交互按键
@@ -73,8 +98,7 @@ func _physics_process(delta: float) -> void:
 			nearby_interactable.interact(self)
 
 func update_sprite() -> void:
-	var row = facing_dir
-	sprite.frame = row * 3 + anim_frame
+	sprite.frame = facing_dir * 3 + anim_frame
 
 # ===== 交互区域检测 =====
 func _on_interaction_area_body_entered(body: Node) -> void:
