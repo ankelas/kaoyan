@@ -1,8 +1,6 @@
 extends CanvasLayer
 class_name HUD
 
-var player: Node = null
-
 @onready var energy_bar: ProgressBar = $TopBar/EnergyBar
 @onready var study_bar: ProgressBar = $TopBar/StudyBar
 @onready var happiness_bar: ProgressBar = $TopBar/HappinessBar

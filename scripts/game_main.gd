@@ -17,9 +17,6 @@ func _ready() -> void:
 	player_container.add_child(player)
 	active_player = player
 	
-	# 连接 HUD
-	hud.get_node(".").player = player
-	
 	# 连接对话框
 	dialog_ui.hide()
 	
