@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlgscn"]
+
+[sub_resource type="StyleBoxFlat" id="dlg_bg"]
+bg_color = Color(0.1,0.1,0.15,0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3,0.5,0.8,1)
+
+[node name="DialogPanel" type="Control"]
+script = "res://scripts/dialog_manager.gd"
+anchors_preset = 0
+size = Vector2(960, 576)
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_top = 0.7
+anchor_bottom = 1.0
+anchor_left = 0.1
+anchor_right = 0.9
+size = Vector2(768, 150)
+offset_left = 0.0
+offset_top = 6.0
+offset_right = 0.0
+offset_bottom = -10.0
+["theme_override_styles/panel"] = SubResource("dlg_bg")
+
+[node name="NameLabel" type="Label" parent="Panel"]
+offset_left = 20.0
+offset_top = 8.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 0, 1)
+
+[node name="TextLabel" type="RichTextLabel" parent="Panel"]
+anchors_preset = 8
+anchor_top = 0.2
+anchor_bottom = 0.95
+anchor_left = 0.03
+anchor_right = 0.97
+size = Vector2(740, 110)
+offset_left = 0.0
+offset_top = 4.0
+offset_right = 0.0
+offset_bottom = 0.0
+bbcode_enabled = true
+theme_override_font_sizes/normal_font_size = 16
+["theme_override_colors/default_color"] = Color(1, 1, 1, 1)
+
+[node name="NextIndicator" type="TextureRect" parent="Panel"]
+offset_left = 720.0
+offset_top = 118.0
+offset_right = 740.0
+offset_bottom = 138.0
+visible = false
+modulate = Color(1, 1, 1, 0.7)
+
+[node name="TypeTimer" type="Timer" parent="."]
+wait_time = 0.03
+one_shot = false

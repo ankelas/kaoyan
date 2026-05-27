@@ -1,0 +1,534 @@
+[gd_scene load_steps=8 format=3 uid="uid://classroom"]
+[ext_resource type="Texture2D" path="res://assets/tiles/floor_dark.png" id="floor"]
+[ext_resource type="Texture2D" path="res://assets/tiles/wall_light.png" id="wall"]
+[ext_resource type="Texture2D" path="res://assets/tiles/desk.png" id="desk"]
+[ext_resource type="Texture2D" path="res://assets/tiles/table.png" id="table"]
+[ext_resource type="Texture2D" path="res://assets/sprites/teacher.png" id="teacher"]
+[ext_resource type="Texture2D" path="res://assets/sprites/classmate.png" id="mate"]
+[ext_resource type="Texture2D" path="res://assets/tiles/door.png" id="door_tex"]
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(32, 48)
+[sub_resource type="RectangleShape2D" id="W_T"]
+size = Vector2(1000, 24)
+[sub_resource type="RectangleShape2D" id="W_B"]
+size = Vector2(1000, 24)
+[sub_resource type="RectangleShape2D" id="W_L"]
+size = Vector2(24, 600)
+[sub_resource type="RectangleShape2D" id="W_R"]
+size = Vector2(24, 600)
+[sub_resource type="RectangleShape2D" id="StnShape"]
+size = Vector2(40, 40)
+[sub_resource type="RectangleShape2D" id="NpcShape"]
+size = Vector2(40, 40)
+
+[node name="Room" type="Node2D"]
+[node name="Floor" type="Sprite2D" parent="."]
+texture = ExtResource("floor")
+position = Vector2(480, 288)
+scale = Vector2(20, 20)
+z_index = -1
+[node name="Wall_Top" type="StaticBody2D" parent="."]
+position = Vector2(480, -12)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Top"]
+shape = SubResource("W_T")
+[node name="Wall_Bottom" type="StaticBody2D" parent="."]
+position = Vector2(480, 588)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Bottom"]
+shape = SubResource("W_B")
+[node name="Wall_Left" type="StaticBody2D" parent="."]
+position = Vector2(-12, 288)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Left"]
+shape = SubResource("W_L")
+[node name="Wall_Right" type="StaticBody2D" parent="."]
+position = Vector2(972, 288)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Right"]
+shape = SubResource("W_R")
+[node name="WallTop" type="Sprite2D" parent="."]
+texture = ExtResource("wall")
+position = Vector2(320, 24)
+scale = Vector2(19.5, 19.5)
+z_index = 0
+[node name="WallTop2" type="Sprite2D" parent="."]
+texture = ExtResource("wall")
+position = Vector2(640, 24)
+scale = Vector2(19.5, 19.5)
+z_index = 0
+[node name="WallBot" type="Sprite2D" parent="."]
+texture = ExtResource("wall")
+position = Vector2(320, 552)
+scale = Vector2(19.5, 19.5)
+z_index = 0
+[node name="Podium" type="Sprite2D" parent="."]
+texture = ExtResource("table")
+position = Vector2(480, 80)
+scale = Vector2(2, 2)
+z_index = 0
+[node name="ExamStation" type="Area2D" parent="."]
+position = Vector2(480, 100)
+script = "res://scripts/exam_station.gd"
+exam_name = "模拟考试"
+min_score = 30
+max_score = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExamStation"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="ExamStation"]
+texture = ExtResource("table")
+z_index = 0
+
+[node name="Label" type="Label" parent="ExamStation"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="ExamStation"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_0_0" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(200, 200)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_0_0" type="Area2D" parent="."]
+position = Vector2(200, 210)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_0_0"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_0_0"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_0_0"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_0_0"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_0_1" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(400, 200)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_0_1" type="Area2D" parent="."]
+position = Vector2(400, 210)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_0_1"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_0_1"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_0_1"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_0_1"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_0_2" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(600, 200)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_0_2" type="Area2D" parent="."]
+position = Vector2(600, 210)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_0_2"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_0_2"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_0_2"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_0_2"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_1_0" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(200, 280)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_1_0" type="Area2D" parent="."]
+position = Vector2(200, 290)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_1_0"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_1_0"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_1_0"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_1_0"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_1_1" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(400, 280)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_1_1" type="Area2D" parent="."]
+position = Vector2(400, 290)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_1_1"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_1_1"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_1_1"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_1_1"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_1_2" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(600, 280)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_1_2" type="Area2D" parent="."]
+position = Vector2(600, 290)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_1_2"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_1_2"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_1_2"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_1_2"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_2_0" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(200, 360)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_2_0" type="Area2D" parent="."]
+position = Vector2(200, 370)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_2_0"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_2_0"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_2_0"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_2_0"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_2_1" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(400, 360)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_2_1" type="Area2D" parent="."]
+position = Vector2(400, 370)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_2_1"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_2_1"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_2_1"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_2_1"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_2_2" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(600, 360)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_2_2" type="Area2D" parent="."]
+position = Vector2(600, 370)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_2_2"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_2_2"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_2_2"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_2_2"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_3_0" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(200, 440)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_3_0" type="Area2D" parent="."]
+position = Vector2(200, 450)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_3_0"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_3_0"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_3_0"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_3_0"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_3_1" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(400, 440)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_3_1" type="Area2D" parent="."]
+position = Vector2(400, 450)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_3_1"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_3_1"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_3_1"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_3_1"]
+wait_time = 0.5
+one_shot = true
+[node name="Desk_3_2" type="Sprite2D" parent="."]
+texture = ExtResource("desk")
+position = Vector2(600, 440)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+[node name="Study_3_2" type="Area2D" parent="."]
+position = Vector2(600, 450)
+script = "res://scripts/study_station.gd"
+efficiency = 1.0
+energy_cost = 10
+study_gain = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Study_3_2"]
+shape = SubResource("StnShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Study_3_2"]
+texture = ExtResource("desk")
+z_index = 0
+
+[node name="Label" type="Label" parent="Study_3_2"]
+offset_left = -30.0
+offset_top = -40.0
+offset_right = 30.0
+offset_bottom = -20.0
+text = ""
+theme_override_font_sizes/font_size = 14
+["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+
+[node name="Cooldown" type="Timer" parent="Study_3_2"]
+wait_time = 0.5
+one_shot = true
+[node name="DoorToDorm" type="Area2D" parent="."]
+position = Vector2(20, 288)
+script = "res://scripts/door.gd"
+target_scene = "res://scenes/dormitory.tscn"
+target_spawn = "spawn_door"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorToDorm"]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="DoorToDorm"]
+texture = ExtResource("door_tex")
+z_index = 1
+[node name="DoorToLib" type="Area2D" parent="."]
+position = Vector2(940, 288)
+script = "res://scripts/door.gd"
+target_scene = "res://scenes/library.tscn"
+target_spawn = "spawn_door"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorToLib"]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="DoorToLib"]
+texture = ExtResource("door_tex")
+z_index = 1
+[node name="DoorToCanteen" type="Area2D" parent="."]
+position = Vector2(480, 558)
+script = "res://scripts/door.gd"
+target_scene = "res://scenes/canteen.tscn"
+target_spawn = "spawn_door"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorToCanteen"]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="DoorToCanteen"]
+texture = ExtResource("door_tex")
+z_index = 1
+[node name="spawn_door" type="Marker2D" parent="."]
+position = Vector2(60, 288)
+[node name="spawn_default" type="Marker2D" parent="."]
+position = Vector2(480, 400)
+[node name="Teacher" type="Area2D" parent="."]
+position = Vector2(480, 60)
+script = "res://scripts/npc.gd"
+npc_name = "李老师"
+spritesheet = "teacher"
+dialog_lines = ["认真复习，考研必胜！", "这道题是重点，要记牢。", "加油，你们是最棒的！"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Teacher"]
+shape = SubResource("NpcShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Teacher"]
+texture = ExtResource("teacher")
+hframes = 3
+vframes = 4
+frame = 0
+[node name="Classmate" type="Area2D" parent="."]
+position = Vector2(160, 400)
+script = "res://scripts/npc.gd"
+npc_name = "小明"
+spritesheet = "mate"
+dialog_lines = ["这道题你懂了吗？", "一起学习吧！", "下节课要考试了！"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Classmate"]
+shape = SubResource("NpcShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Classmate"]
+texture = ExtResource("mate")
+hframes = 3
+vframes = 4
+frame = 0
