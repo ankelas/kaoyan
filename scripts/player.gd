@@ -72,7 +72,9 @@ func _physics_process(delta: float) -> void:
 	
 	if is_moving:
 		var dist = target_pos - position
-		if dist.length() > 1.0:
+		var dist_len = dist.length()
+		
+		if dist_len > 0.5:
 			var prev_pos = position
 			velocity = dist.normalized() * MOVE_SPEED
 			move_and_slide()
@@ -84,11 +86,19 @@ func _physics_process(delta: float) -> void:
 				anim_frame = 0
 				anim_timer = 0.0
 			else:
-				# 动画循环（1和2交替行走）
-				anim_timer += delta
-				if anim_timer >= MOVE_DELAY:
+				# 检查是否已越过目标（方向反转 = 已过冲 → 直接对齐）
+				var new_dist = target_pos - position
+				if new_dist.length() <= 0.5 or new_dist.dot(dist) < 0:
+					position = target_pos
+					is_moving = false
+					anim_frame = 0
 					anim_timer = 0.0
-					anim_frame = 1 if anim_frame == 2 else 2
+				else:
+					# 动画循环（1和2交替行走）
+					anim_timer += delta
+					if anim_timer >= MOVE_DELAY:
+						anim_timer = 0.0
+						anim_frame = 1 if anim_frame == 2 else 2
 		else:
 			position = target_pos
 			is_moving = false
