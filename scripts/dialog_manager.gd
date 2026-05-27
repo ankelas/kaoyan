@@ -11,6 +11,8 @@ var current_char: int = 0
 var is_typing: bool = false
 var is_closing: bool = false
 
+signal dialog_closed
+
 func _ready() -> void:
 	hide()
 	modulate = Color(1, 1, 1, 0)
@@ -66,6 +68,7 @@ func close_dialog() -> void:
 	tween.tween_property(self, "modulate", Color(1,1,1,0), 0.2)
 	await tween.finished
 	hide()
+	dialog_closed.emit()
 	
 	# 通知 main 解锁玩家
 	var main = get_tree().root.get_node("Main")

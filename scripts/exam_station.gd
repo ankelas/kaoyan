@@ -53,6 +53,6 @@ func interact(_player: Node) -> void:
 	
 	var msg = "%s 成绩: %d 分 [%s]\n（按空格键继续）" % [exam_name, score, grade]
 	main.show_dialog(msg, "考试")
-	await main.dialog_ui.get_node("DialogPanel").tree_exited
+	await main.dialog_ui.get_node("DialogPanel").dialog_closed
 	
 	GameState.end_day()

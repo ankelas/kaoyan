@@ -20,10 +20,16 @@ var is_busy: bool = false          # 对话/考试中禁用移动
 @onready var interaction_area: Area2D = $InteractionArea
 
 func _ready() -> void:
-	# 水平翻转默认
-	sprite.hframes = 3
-	sprite.vframes = 4
-	update_sprite()
+ # 水平翻转默认
+ sprite.hframes = 3
+ sprite.vframes = 4
+ update_sprite()
+
+ # 连接交互信号
+ interaction_area.body_entered.connect(_on_interaction_area_body_entered)
+ interaction_area.body_exited.connect(_on_interaction_area_body_exited)
+ interaction_area.area_entered.connect(_on_interaction_area_area_entered)
+ interaction_area.area_exited.connect(_on_interaction_area_area_exited)
 
 func _physics_process(delta: float) -> void:
 	if is_busy:

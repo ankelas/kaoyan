@@ -1,41 +1,89 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
 [application]
+
 config/name="考研模拟器"
 config/description="考研冲刺模拟器——在有限的时间内平衡学习、休息与考试"
 run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.6")
 config/icon="res://assets/images/icon.png"
 
+[autoload]
+
+GameState="*res://scripts/game_state.gd"
+
 [display]
+
 window/size/viewport_width=960
 window/size/viewport_height=576
-window/size/mode=0
-window/size/always_on_top=false
-window/dpi/allow_hidpi=true
 
 [input]
-ui_up={
+
+ui_cancel={
 "deadzone": 0.5,
-"events": [{"type": 7, "keycode": 87}, {"type": 7, "keycode": 4194320}]
-}
-ui_down={
-"deadzone": 0.5,
-"events": [{"type": 7, "keycode": 83}, {"type": 7, "keycode": 4194322}]
+"events": [{
+"keycode": 88,
+"type": 7
+}, {
+"keycode": 4194305,
+"type": 7
+}]
 }
 ui_left={
 "deadzone": 0.5,
-"events": [{"type": 7, "keycode": 65}, {"type": 7, "keycode": 4194319}]
+"events": [{
+"keycode": 65,
+"type": 7
+}, {
+"keycode": 4194319,
+"type": 7
+}]
 }
 ui_right={
 "deadzone": 0.5,
-"events": [{"type": 7, "keycode": 68}, {"type": 7, "keycode": 4194321}]
+"events": [{
+"keycode": 68,
+"type": 7
+}, {
+"keycode": 4194321,
+"type": 7
+}]
+}
+ui_up={
+"deadzone": 0.5,
+"events": [{
+"keycode": 87,
+"type": 7
+}, {
+"keycode": 4194320,
+"type": 7
+}]
+}
+ui_down={
+"deadzone": 0.5,
+"events": [{
+"keycode": 83,
+"type": 7
+}, {
+"keycode": 4194322,
+"type": 7
+}]
 }
 ui_interact={
 "deadzone": 0.5,
-"events": [{"type": 7, "keycode": 32}, {"type": 7, "keycode": 69}]
+"events": [{
+"keycode": 32,
+"type": 7
+}, {
+"keycode": 69,
+"type": 7
+}]
 }
-ui_cancel={
-"deadzone": 0.5,
-"events": [{"type": 7, "keycode": 88}, {"type": 7, "keycode": 4194305}]
-}
-
-[autoload]
-GameState="*res://scripts/game_state.gd"
