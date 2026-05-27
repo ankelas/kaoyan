@@ -71,23 +71,28 @@ func _physics_process(delta: float) -> void:
 			anim_timer = 0.0
 	
 	if is_moving:
-		# 向目标位置移动
 		var dist = target_pos - position
 		if dist.length() > 1.0:
+			var prev_pos = position
 			velocity = dist.normalized() * MOVE_SPEED
 			move_and_slide()
 			
-			# 动画循环
-			anim_timer += delta
-			if anim_timer >= MOVE_DELAY:
+			# 检查是否被碰撞阻挡
+			if position.distance_to(prev_pos) < 1.0:
+				position = (position / TILE_SIZE).round() * TILE_SIZE
+				is_moving = false
+				anim_frame = 0
 				anim_timer = 0.0
-				anim_frame = (anim_frame + 1) % 3
-				if anim_frame == 0:
-					anim_frame = 1  # 0是站立帧，走路只用1和2交替
+			else:
+				# 动画循环（1和2交替行走）
+				anim_timer += delta
+				if anim_timer >= MOVE_DELAY:
+					anim_timer = 0.0
+					anim_frame = 1 if anim_frame == 2 else 2
 		else:
 			position = target_pos
 			is_moving = false
-			anim_frame = 0  # 站立
+			anim_frame = 0
 			anim_timer = 0.0
 	
 	update_sprite()
