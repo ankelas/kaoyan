@@ -85,7 +85,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="ExamStation"]
 wait_time = 0.5
@@ -116,7 +116,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_0_0"]
 wait_time = 0.5
@@ -147,7 +147,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_0_1"]
 wait_time = 0.5
@@ -178,7 +178,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_0_2"]
 wait_time = 0.5
@@ -209,7 +209,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_1_0"]
 wait_time = 0.5
@@ -240,7 +240,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_1_1"]
 wait_time = 0.5
@@ -271,7 +271,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_1_2"]
 wait_time = 0.5
@@ -302,7 +302,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_2_0"]
 wait_time = 0.5
@@ -333,7 +333,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_2_1"]
 wait_time = 0.5
@@ -364,7 +364,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_2_2"]
 wait_time = 0.5
@@ -395,7 +395,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_3_0"]
 wait_time = 0.5
@@ -426,7 +426,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_3_1"]
 wait_time = 0.5
@@ -457,7 +457,7 @@ offset_right = 30.0
 offset_bottom = -20.0
 text = ""
 theme_override_font_sizes/font_size = 14
-["theme_override_colors/font_color"] = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 
 [node name="Cooldown" type="Timer" parent="Study_3_2"]
 wait_time = 0.5

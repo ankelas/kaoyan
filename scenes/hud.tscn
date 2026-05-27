@@ -24,9 +24,9 @@ offset_right = 190.0
 offset_bottom = 24.0
 show_percentage = false
 modulate = Color(0.7, 0.9, 0.7, 1)
-["theme_override_colors/font_color"] = Color(0, 0, 0, 1)
-["theme_override_styles/background"] = SubResource("sb_bg")
-["theme_override_styles/fill"] = SubResource("sb_en")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("sb_bg")
+theme_override_styles/fill = SubResource("sb_en")
 
 [node name="Label" type="Label" parent="TopBar/EnergyBar"]
 anchors_preset = 0
@@ -42,9 +42,9 @@ offset_right = 390.0
 offset_bottom = 24.0
 show_percentage = false
 modulate = Color(0.6, 0.7, 1.0, 1)
-["theme_override_colors/font_color"] = Color(0, 0, 0, 1)
-["theme_override_styles/background"] = SubResource("sb_bg")
-["theme_override_styles/fill"] = SubResource("sb_st")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("sb_bg")
+theme_override_styles/fill = SubResource("sb_st")
 
 [node name="Label" type="Label" parent="TopBar/StudyBar"]
 anchors_preset = 0
@@ -60,9 +60,9 @@ offset_right = 590.0
 offset_bottom = 24.0
 show_percentage = false
 modulate = Color(1.0, 0.7, 0.7, 1)
-["theme_override_colors/font_color"] = Color(0, 0, 0, 1)
-["theme_override_styles/background"] = SubResource("sb_bg")
-["theme_override_styles/fill"] = SubResource("sb_hp")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/background = SubResource("sb_bg")
+theme_override_styles/fill = SubResource("sb_hp")
 
 [node name="Label" type="Label" parent="TopBar/HappinessBar"]
 anchors_preset = 0
